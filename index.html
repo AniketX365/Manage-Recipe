@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Manager</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+    <div class="header-container">
+        <div class="header-left">
+            <h1>Manage Recipe</h1>
+        </div>
+        <div class="header-right">
+            <nav>
+                <button id="home-btn">Home</button>
+                <button id="add-recipe-btn">Add Recipe</button>
+            </nav>
+            
+        </div>
+    </div>
+</header>
+
+    <main class="container">
+        <!-- Home Page -->
+        <section id="home-page" class="page active">
+            <div class="filters">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="Search recipes...">
+                </div>
+                <div class="filter-group">
+                    <select id="difficulty-filter">
+                        <option value="all">All Difficulties</option>
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                    <select id="time-filter">
+                        <option value="0">Any Prep Time</option>
+                        <option value="15">15 min or less</option>
+                        <option value="30">30 min or less</option>
+                        <option value="60">60 min or less</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div id="recipe-grid" class="recipe-grid">
+                <!-- Recipe cards will be inserted here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Recipe Detail Page -->
+        <section id="recipe-detail-page" class="page">
+            <div id="recipe-detail" class="recipe-detail">
+                <!-- Recipe details will be inserted here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Add/Edit Recipe Form -->
+        <section id="recipe-form-page" class="page">
+            <form id="recipe-form" class="recipe-form">
+                <h2 id="form-title">Add New Recipe</h2>
+                
+                <div class="form-group">
+                    <label for="recipe-title">Title *</label>
+                    <input type="text" id="recipe-title" required>
+                    <div class="error-message" id="title-error">Title is required</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="recipe-description">Description</label>
+                    <textarea id="recipe-description"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="recipe-image">Image URL</label>
+                    <input type="text" id="recipe-image">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="prep-time">Prep Time (minutes) *</label>
+                        <input type="number" id="prep-time" min="1" required>
+                        <div class="error-message" id="prep-time-error">Prep time is required</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cook-time">Cook Time (minutes)</label>
+                        <input type="number" id="cook-time" min="0">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="difficulty">Difficulty *</label>
+                    <select id="difficulty" required>
+                        <option value="">Select Difficulty</option>
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                    <div class="error-message" id="difficulty-error">Difficulty is required</div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Ingredients *</label>
+                    <div class="ingredient-input">
+                        <input type="text" id="ingredient-input" placeholder="Add ingredient">
+                        <button type="button" class="btn-add" id="add-ingredient">Add</button>
+                    </div>
+                    <div id="ingredients-list" class="ingredient-list"></div>
+                    <div class="error-message" id="ingredients-error">At least one ingredient is required</div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Steps *</label>
+                    <div class="step-input">
+                        <textarea id="step-input" placeholder="Add step"></textarea>
+                        <button type="button" class="btn-add" id="add-step">Add</button>
+                    </div>
+                    <div id="steps-list" class="step-list"></div>
+                    <div class="error-message" id="steps-error">At least one step is required</div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" id="cancel-btn" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Recipe</button>
+                </div>
+            </form>
+        </section>
+    </main>
+        <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>Manage Recipe</h3>
+                    <p>Your ultimate companion for discovering, creating, and sharing delicious recipes. Cook with passion, share with love.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <i>📘</i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <i>🐦</i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <i>📷</i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Pinterest">
+                            <i>📌</i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#" id="about-link">About Us</a></li>
+                        <li><a href="#" id="careers-link">Careers</a></li>
+                        <li><a href="#" id="team-link">Our Team</a></li>
+                        <li><a href="#" id="press-link">Press</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#" id="contact-link">Contact Us</a></li>
+                        <li><a href="#" id="help-link">Help Center</a></li>
+                        <li><a href="#" id="faq-link">FAQ</a></li>
+                        <li><a href="#" id="community-link">Community</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#" id="privacy-link">Privacy Policy</a></li>
+                        <li><a href="#" id="terms-link">Terms of Service</a></li>
+                        <li><a href="#" id="cookies-link">Cookie Policy</a></li>
+                        <li><a href="#" id="gdpr-link">GDPR</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Recipe Manager. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="#" id="sitemap-link">Sitemap</a>
+                    <a href="#" id="accessibility-link">Accessibility</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        ↑
+    </button>
+
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

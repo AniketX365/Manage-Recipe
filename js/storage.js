@@ -58,34 +58,6 @@ export const Storage = {
             },
             {
                 id: Utils.generateId(),
-                title: 'Spaghetti Carbonara',
-                description: 'A classic Italian pasta dish with eggs, cheese, and pancetta.',
-                image: 'https://lovefoodies.com/wp-content/uploads/2020/04/Classic-Italian-Spaghetti-Carbonara2-696x975@2x.jpg',
-                prepTime: 15,
-                cookTime: 20,
-                difficulty: 'medium',
-                ingredients: [
-                    '400g spaghetti',
-                    '200g pancetta or guanciale, diced',
-                    '4 large eggs',
-                    '100g Pecorino Romano cheese, grated',
-                    '50g Parmesan cheese, grated',
-                    '2 cloves garlic, minced',
-                    'Black pepper to taste',
-                    'Salt for pasta water'
-                ],
-                steps: [
-                    'Bring a large pot of salted water to boil and cook spaghetti according to package directions.',
-                    'While pasta cooks, heat a large skillet over medium heat and cook pancetta until crispy.',
-                    'In a bowl, whisk eggs and both cheeses together.',
-                    'Reserve 1 cup of pasta water before draining.',
-                    'Working quickly, add hot pasta to the skillet with pancetta, remove from heat.',
-                    'Add egg and cheese mixture, stirring constantly. Add pasta water as needed to create a creamy sauce.',
-                    'Season with black pepper and serve immediately.'
-                ]
-            },
-            {
-                id: Utils.generateId(),
                 title: 'Beef Wellington',
                 description: 'An elegant dish featuring beef tenderloin wrapped in puff pastry.',
                 image: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',

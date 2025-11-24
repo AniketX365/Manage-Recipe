@@ -8,19 +8,21 @@
 </head>
 <body>
     <header>
-    <div class="header-container">
-        <div class="header-left">
-            <h1>Manage Recipe</h1>
+        <div class="header-container">
+            <div class="header-left">
+                <h1>Recipe Manager</h1>
+            </div>
+            <div class="header-right">
+                <nav>
+                    <button id="home-btn">Home</button>
+                    <button id="add-recipe-btn">Add Recipe</button>
+                </nav>
+                <button class="custom-container-btn" id="container-btn">
+                    My Recipes
+                </button>
+            </div>
         </div>
-        <div class="header-right">
-            <nav>
-                <button id="home-btn">Home</button>
-                <button id="add-recipe-btn">Add Recipe</button>
-            </nav>
-            
-        </div>
-    </div>
-</header>
+    </header>
 
     <main class="container">
         <!-- Home Page -->
@@ -43,18 +45,19 @@
                         <option value="60">60 min or less</option>
                     </select>
                 </div>
-                <!-- Add this to the filters section in home-page -->
-                <div class="diet-mode-container">
-                    <span class="diet-mode-label">Diet Mode:</span>
-                    <div class="diet-mode-toggle">
-                        <button class="diet-mode-btn active" id="all-diet-btn">All</button>
-                        <button class="diet-mode-btn" id="veg-diet-btn">
+            </div>
+
+            <!-- Diet Mode Toggle -->
+            <div class="diet-mode-container">
+                <span class="diet-mode-label">Diet Mode:</span>
+                <div class="diet-mode-toggle">
+                    <button class="diet-mode-btn active" id="all-diet-btn">All</button>
+                    <button class="diet-mode-btn" id="veg-diet-btn">
                         <span class="diet-icon veg"></span> Veg
-                        </button>
-                        <button class="diet-mode-btn" id="non-veg-diet-btn">
+                    </button>
+                    <button class="diet-mode-btn" id="non-veg-diet-btn">
                         <span class="diet-icon non-veg"></span> Non-Veg
-                        </button>
-                    </div>
+                    </button>
                 </div>
             </div>
             
@@ -113,32 +116,33 @@
                         <option value="hard">Hard</option>
                     </select>
                     <div class="error-message" id="difficulty-error">Difficulty is required</div>
-                    <!-- Add this to the recipe form after difficulty selection -->
+                </div>
+
+                <!-- Diet Type Selection -->
                 <div class="form-group">
                     <label>Diet Type *</label>
-                        <div class="diet-selection">
+                    <div class="diet-selection">
                         <div class="diet-option veg">
                             <input type="radio" id="diet-veg" name="dietType" value="veg" required>
-                    <label for="diet-veg">
-                        <div class="diet-preview">
-                            <span class="diet-icon veg"></span>
-                            Vegetarian
+                            <label for="diet-veg">
+                                <div class="diet-preview">
+                                    <span class="diet-icon veg"></span>
+                                    Vegetarian
+                                </div>
+                            </label>
                         </div>
-                    </label>
-                </div>
                         <div class="diet-option non-veg">
                             <input type="radio" id="diet-non-veg" name="dietType" value="non-veg" required>
-                        <label for="diet-non-veg">
-                        <div class="diet-preview">
-                            <span class="diet-icon non-veg"></span>
-                            Non-Vegetarian
+                            <label for="diet-non-veg">
+                                <div class="diet-preview">
+                                    <span class="diet-icon non-veg"></span>
+                                    Non-Vegetarian
+                                </div>
+                            </label>
                         </div>
-                        </label>
                     </div>
+                    <div class="error-message" id="diet-type-error">Diet type is required</div>
                 </div>
-            <div class="error-message" id="diet-type-error">Diet type is required</div>
-            </div>
-        </div>
                 
                 <div class="form-group">
                     <label>Ingredients *</label>
@@ -165,28 +169,28 @@
                     <button type="submit" class="btn btn-primary">Save Recipe</button>
                 </div>
             </form>
-
         </section>
     </main>
-        <!-- Footer -->
+
+    <!-- Footer -->
     <footer>
         <div class="footer-container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <h3>Manage Recipe</h3>
+                    <h3>Recipe Manager</h3>
                     <p>Your ultimate companion for discovering, creating, and sharing delicious recipes. Cook with passion, share with love.</p>
                     <div class="social-links">
                         <a href="#" class="social-link" aria-label="Facebook">
-                            <i>📘</i>
+                            📘
                         </a>
                         <a href="#" class="social-link" aria-label="Twitter">
-                            <i>🐦</i>
+                            🐦
                         </a>
                         <a href="#" class="social-link" aria-label="Instagram">
-                            <i>📷</i>
+                            📷
                         </a>
                         <a href="#" class="social-link" aria-label="Pinterest">
-                            <i>📌</i>
+                            📌
                         </a>
                     </div>
                 </div>

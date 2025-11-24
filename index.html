@@ -43,6 +43,19 @@
                         <option value="60">60 min or less</option>
                     </select>
                 </div>
+                <!-- Add this to the filters section in home-page -->
+                <div class="diet-mode-container">
+                    <span class="diet-mode-label">Diet Mode:</span>
+                    <div class="diet-mode-toggle">
+                        <button class="diet-mode-btn active" id="all-diet-btn">All</button>
+                        <button class="diet-mode-btn" id="veg-diet-btn">
+                        <span class="diet-icon veg"></span> Veg
+                        </button>
+                        <button class="diet-mode-btn" id="non-veg-diet-btn">
+                        <span class="diet-icon non-veg"></span> Non-Veg
+                        </button>
+                    </div>
+                </div>
             </div>
             
             <div id="recipe-grid" class="recipe-grid">
@@ -100,7 +113,32 @@
                         <option value="hard">Hard</option>
                     </select>
                     <div class="error-message" id="difficulty-error">Difficulty is required</div>
+                    <!-- Add this to the recipe form after difficulty selection -->
+                <div class="form-group">
+                    <label>Diet Type *</label>
+                        <div class="diet-selection">
+                        <div class="diet-option veg">
+                            <input type="radio" id="diet-veg" name="dietType" value="veg" required>
+                    <label for="diet-veg">
+                        <div class="diet-preview">
+                            <span class="diet-icon veg"></span>
+                            Vegetarian
+                        </div>
+                    </label>
                 </div>
+                        <div class="diet-option non-veg">
+                            <input type="radio" id="diet-non-veg" name="dietType" value="non-veg" required>
+                        <label for="diet-non-veg">
+                        <div class="diet-preview">
+                            <span class="diet-icon non-veg"></span>
+                            Non-Vegetarian
+                        </div>
+                        </label>
+                    </div>
+                </div>
+            <div class="error-message" id="diet-type-error">Diet type is required</div>
+            </div>
+        </div>
                 
                 <div class="form-group">
                     <label>Ingredients *</label>
@@ -127,6 +165,7 @@
                     <button type="submit" class="btn btn-primary">Save Recipe</button>
                 </div>
             </form>
+
         </section>
     </main>
         <!-- Footer -->

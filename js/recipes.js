@@ -61,7 +61,7 @@ export const Recipes = {
     },
 
     // Search recipes
-    search(searchTerm, difficultyFilter, timeFilter) {
+    search(searchTerm, difficultyFilter, timeFilter, dietFilter) {
         return this.recipes.filter(recipe => {
             // Search filter
             if (searchTerm && 
@@ -77,6 +77,11 @@ export const Recipes = {
             
             // Time filter
             if (timeFilter > 0 && recipe.prepTime > timeFilter) {
+                return false;
+            }
+            
+            // Diet filter
+            if (dietFilter !== 'all' && recipe.dietType !== dietFilter) {
                 return false;
             }
             

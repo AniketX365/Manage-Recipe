@@ -39,6 +39,7 @@ export const Storage = {
                 prepTime: 10,
                 cookTime: 15,
                 difficulty: 'easy',
+                dietType: 'veg',
                 ingredients: [
                     '1 cup all-purpose flour',
                     '2 tablespoons sugar',
@@ -58,12 +59,42 @@ export const Storage = {
             },
             {
                 id: Utils.generateId(),
+                title: 'Spaghetti Carbonara',
+                description: 'A classic Italian pasta dish with eggs, cheese, and pancetta.',
+                image: 'https://images.unsplash.com/photo-1621996346565-e3dbc353d2e5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+                prepTime: 15,
+                cookTime: 20,
+                difficulty: 'medium',
+                dietType: 'non-veg',
+                ingredients: [
+                    '400g spaghetti',
+                    '200g pancetta or guanciale, diced',
+                    '4 large eggs',
+                    '100g Pecorino Romano cheese, grated',
+                    '50g Parmesan cheese, grated',
+                    '2 cloves garlic, minced',
+                    'Black pepper to taste',
+                    'Salt for pasta water'
+                ],
+                steps: [
+                    'Bring a large pot of salted water to boil and cook spaghetti according to package directions.',
+                    'While pasta cooks, heat a large skillet over medium heat and cook pancetta until crispy.',
+                    'In a bowl, whisk eggs and both cheeses together.',
+                    'Reserve 1 cup of pasta water before draining.',
+                    'Working quickly, add hot pasta to the skillet with pancetta, remove from heat.',
+                    'Add egg and cheese mixture, stirring constantly. Add pasta water as needed to create a creamy sauce.',
+                    'Season with black pepper and serve immediately.'
+                ]
+            },
+            {
+                id: Utils.generateId(),
                 title: 'Beef Wellington',
                 description: 'An elegant dish featuring beef tenderloin wrapped in puff pastry.',
                 image: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
                 prepTime: 45,
                 cookTime: 40,
                 difficulty: 'hard',
+                dietType: 'non-veg',
                 ingredients: [
                     '1.5 kg beef tenderloin',
                     '2 tablespoons olive oil',
@@ -92,6 +123,7 @@ export const Storage = {
                 prepTime: 20,
                 cookTime: 15,
                 difficulty: 'easy',
+                dietType: 'veg',
                 ingredients: [
                     '1 cup quinoa, rinsed',
                     '2 cups vegetable broth',
@@ -124,6 +156,7 @@ export const Storage = {
                 prepTime: 15,
                 cookTime: 25,
                 difficulty: 'medium',
+                dietType: 'non-veg',
                 ingredients: [
                     '2 tablespoons green curry paste',
                     '1 can (400ml) coconut milk',
@@ -158,6 +191,7 @@ export const Storage = {
                 prepTime: 25,
                 cookTime: 12,
                 difficulty: 'medium',
+                dietType: 'veg',
                 ingredients: [
                     '4 ounces high-quality dark chocolate (70%)',
                     '1/2 cup unsalted butter',

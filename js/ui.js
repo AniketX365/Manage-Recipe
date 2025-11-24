@@ -1,7 +1,6 @@
 import { Recipes } from './recipes.js';
 import { Utils } from './utils.js';
 
-
 // UI management
 export const UI = {
     // DOM elements
@@ -18,7 +17,16 @@ export const UI = {
         timeFilter: document.getElementById('time-filter'),
         homeBtn: document.getElementById('home-btn'),
         addRecipeBtn: document.getElementById('add-recipe-btn'),
-        cancelBtn: document.getElementById('cancel-btn')
+        cancelBtn: document.getElementById('cancel-btn'),
+        backToTop: document.getElementById('back-to-top'),
+        aboutLink: document.getElementById('about-link'),
+        privacyLink: document.getElementById('privacy-link'),
+        careersLink: document.getElementById('careers-link'),
+        contactLink: document.getElementById('contact-link'),
+        allDietBtn: document.getElementById('all-diet-btn'),
+        vegDietBtn: document.getElementById('veg-diet-btn'),
+        nonVegDietBtn: document.getElementById('non-veg-diet-btn'),
+        dietTypeError: document.getElementById('diet-type-error')
     },
 
     // Form elements
@@ -43,14 +51,16 @@ export const UI = {
         prepTime: document.getElementById('prep-time-error'),
         difficulty: document.getElementById('difficulty-error'),
         ingredients: document.getElementById('ingredients-error'),
-        steps: document.getElementById('steps-error')
+        steps: document.getElementById('steps-error'),
+        dietType: document.getElementById('diet-type-error')
     },
 
     // State
     state: {
         currentRecipeId: null,
         ingredients: [],
-        steps: []
+        steps: [],
+        currentDietMode: 'all' // 'all', 'veg', 'non-veg'
     },
 
     // Initialize UI
@@ -93,6 +103,23 @@ export const UI = {
                 this.addStep();
             }
         });
+
+        // Diet mode buttons
+        this.elements.allDietBtn.addEventListener('click', () => this.setDietMode('all'));
+        this.elements.vegDietBtn.addEventListener('click', () => this.setDietMode('veg'));
+        this.elements.nonVegDietBtn.addEventListener('click', () => this.setDietMode('non-veg'));
+
+        // Back to top button
+        this.elements.backToTop.addEventListener('click', () => this.scrollToTop());
+
+        // Footer links
+        this.elements.aboutLink.addEventListener('click', (e) => this.handleFooterLink(e, 'about'));
+        this.elements.privacyLink.addEventListener('click', (e) => this.handleFooterLink(e, 'privacy'));
+        this.elements.careersLink.addEventListener('click', (e) => this.handleFooterLink(e, 'careers'));
+        this.elements.contactLink.addEventListener('click', (e) => this.handleFooterLink(e, 'contact'));
+
+        // Scroll event for back to top button
+        window.addEventListener('scroll', () => this.toggleBackToTop());
     },
 
     // Show home page
@@ -147,6 +174,11 @@ export const UI = {
         this.formElements.cookTime.value = recipe.cookTime || '';
         this.formElements.difficulty.value = recipe.difficulty;
         
+        // Set diet type
+        if (recipe.dietType) {
+            document.querySelector(`input[name="dietType"][value="${recipe.dietType}"]`).checked = true;
+        }
+        
         // Set ingredients and steps
         this.state.ingredients = [...recipe.ingredients];
         this.state.steps = [...recipe.steps];
@@ -159,13 +191,26 @@ export const UI = {
         this.elements.recipeFormPage.classList.add('active');
     },
 
+    // Set diet mode
+    setDietMode(mode) {
+        this.state.currentDietMode = mode;
+        
+        // Update active button states
+        this.elements.allDietBtn.classList.toggle('active', mode === 'all');
+        this.elements.vegDietBtn.classList.toggle('active', mode === 'veg');
+        this.elements.nonVegDietBtn.classList.toggle('active', mode === 'non-veg');
+        
+        // Re-render recipes with diet filter
+        this.renderRecipes();
+    },
+
     // Render recipes grid
     renderRecipes() {
         const searchTerm = this.elements.searchInput.value.toLowerCase();
         const difficultyValue = this.elements.difficultyFilter.value;
         const timeValue = parseInt(this.elements.timeFilter.value);
         
-        const filteredRecipes = Recipes.search(searchTerm, difficultyValue, timeValue);
+        const filteredRecipes = Recipes.search(searchTerm, difficultyValue, timeValue, this.state.currentDietMode);
         
         if (filteredRecipes.length === 0) {
             this.elements.recipeGrid.innerHTML = `
@@ -184,12 +229,16 @@ export const UI = {
 
     // Render recipe card
     renderRecipeCard(recipe) {
+        const dietBadge = recipe.dietType ? 
+            `<span class="diet-badge ${recipe.dietType}">${recipe.dietType === 'veg' ? 'Vegetarian' : 'Non-Veg'}</span>` : 
+            '';
+        
         return `
             <div class="recipe-card">
                 <img src="${recipe.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'}" 
                      alt="${recipe.title}" class="recipe-image">
                 <div class="recipe-content">
-                    <h3 class="recipe-title">${recipe.title}</h3>
+                    <h3 class="recipe-title">${recipe.title} ${dietBadge}</h3>
                     <div class="recipe-meta">
                         <span>${recipe.prepTime + (recipe.cookTime || 0)} min</span>
                         <span class="difficulty ${recipe.difficulty}">${recipe.difficulty.charAt(0).toUpperCase() + recipe.difficulty.slice(1)}</span>
@@ -206,6 +255,15 @@ export const UI = {
 
     // Render recipe detail
     renderRecipeDetail(recipe) {
+        const dietInfo = recipe.dietType ? 
+            `<div class="meta-item">
+                <span class="meta-label">Diet Type</span>
+                <span class="meta-value">
+                    <span class="diet-badge ${recipe.dietType}">${recipe.dietType === 'veg' ? 'Vegetarian' : 'Non-Vegetarian'}</span>
+                </span>
+            </div>` : 
+            '';
+        
         return `
             <img src="${recipe.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'}" 
                  alt="${recipe.title}" class="recipe-detail-image">
@@ -236,6 +294,7 @@ export const UI = {
                         <span class="meta-label">Total Time</span>
                         <span class="meta-value">${recipe.prepTime + (recipe.cookTime || 0)} min</span>
                     </div>
+                    ${dietInfo}
                 </div>
                 
                 <h2 class="section-title">Ingredients</h2>
@@ -259,6 +318,8 @@ export const UI = {
             return;
         }
         
+        const dietType = document.querySelector('input[name="dietType"]:checked').value;
+        
         const recipeData = {
             title: this.formElements.title.value.trim(),
             description: this.formElements.description.value.trim(),
@@ -266,6 +327,7 @@ export const UI = {
             prepTime: parseInt(this.formElements.prepTime.value),
             cookTime: parseInt(this.formElements.cookTime.value) || 0,
             difficulty: this.formElements.difficulty.value,
+            dietType: dietType,
             ingredients: [...this.state.ingredients],
             steps: [...this.state.steps]
         };
@@ -303,6 +365,13 @@ export const UI = {
         // Validate difficulty
         if (!this.formElements.difficulty.value) {
             this.errorElements.difficulty.style.display = 'block';
+            isValid = false;
+        }
+        
+        // Validate diet type
+        const dietType = document.querySelector('input[name="dietType"]:checked');
+        if (!dietType) {
+            this.errorElements.dietType.style.display = 'block';
             isValid = false;
         }
         
@@ -396,69 +465,39 @@ export const UI = {
             Recipes.delete(id);
             this.showHomePage();
         }
+    },
+
+    // Toggle back to top button
+    toggleBackToTop() {
+        if (window.pageYOffset > 300) {
+            this.elements.backToTop.classList.add('show');
+        } else {
+            this.elements.backToTop.classList.remove('show');
+        }
+    },
+
+    // Scroll to top
+    scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    },
+
+    // Handle footer links
+    handleFooterLink(e, type) {
+        e.preventDefault();
+        
+        const messages = {
+            about: 'About Us Page\n\nRecipe Manager was born from a passion for cooking and technology. Our mission is to make cooking accessible and enjoyable for everyone, from beginners to professional chefs.',
+            privacy: 'Privacy Policy\n\nWe are committed to protecting your privacy. Your recipes and personal data are securely stored and never shared with third parties without your consent.',
+            careers: 'Careers\n\nJoin our team! We\'re always looking for passionate developers, designers, and food enthusiasts to help us build the future of recipe management.',
+            contact: 'Contact Us\n\nEmail: hello@recipemanager.com\nPhone: (555) 123-RECIPE\nAddress: 123 Culinary Street, Food City, FC 12345'
+        };
+        
+        alert(messages[type] || 'This page is coming soon!');
     }
 };
 
 // Make UI available globally for onclick handlers
 window.UI = UI;
-
-// Extend UI.elements with optional footer/back-to-top elements (if present in the DOM)
-UI.elements.backToTop = document.getElementById('back-to-top');
-UI.elements.aboutLink = document.getElementById('about-link');
-UI.elements.privacyLink = document.getElementById('privacy-link');
-UI.elements.careersLink = document.getElementById('careers-link');
-UI.elements.contactLink = document.getElementById('contact-link');
-
-// Add footer/back-to-top methods to UI
-UI.toggleBackToTop = function() {
-    if (!this.elements.backToTop) return;
-    if (window.pageYOffset > 300) {
-        this.elements.backToTop.classList.add('show');
-    } else {
-        this.elements.backToTop.classList.remove('show');
-    }
-};
-
-UI.scrollToTop = function() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-};
-
-UI.handleFooterLink = function(e, type) {
-    e.preventDefault();
-
-    const messages = {
-        about: 'About Us Page\n\nRecipe Manager was born from a passion for cooking and technology. Our mission is to make cooking accessible and enjoyable for everyone, from beginners to professional chefs.',
-        privacy: 'Privacy Policy\n\nWe are committed to protecting your privacy. Your recipes and personal data are securely stored and never shared with third parties without your consent.',
-        careers: 'Careers\n\nJoin our team! We\'re always looking for passionate developers, designers, and food enthusiasts to help us build the future of recipe management.',
-        contact: 'Contact Us\n\nEmail: hello@recipemanager.com\nPhone: (555) 123-RECIPE\nAddress: 123 Culinary Street, Food City, FC 12345'
-    };
-
-    alert(messages[type] || 'This page is coming soon!');
-    // Optionally call a page renderer: this.showFooterPage && this.showFooterPage(type);
-};
-
-UI.showFooterPage = function(page) {
-    console.log('Navigating to: ' + page);
-};
-
-// Augment setupEventListeners to attach footer/back-to-top handlers after original listeners run
-const _origSetupEventListeners = UI.setupEventListeners;
-UI.setupEventListeners = function() {
-    // call original setup to register base listeners
-    _origSetupEventListeners.call(this);
-
-    // Back to top
-    if (this.elements.backToTop) {
-        this.elements.backToTop.addEventListener('click', () => this.scrollToTop());
-        window.addEventListener('scroll', () => this.toggleBackToTop());
-    }
-
-    // Footer links (only attach if elements exist)
-    if (this.elements.aboutLink) this.elements.aboutLink.addEventListener('click', (e) => this.handleFooterLink(e, 'about'));
-    if (this.elements.privacyLink) this.elements.privacyLink.addEventListener('click', (e) => this.handleFooterLink(e, 'privacy'));
-    if (this.elements.careersLink) this.elements.careersLink.addEventListener('click', (e) => this.handleFooterLink(e, 'careers'));
-    if (this.elements.contactLink) this.elements.contactLink.addEventListener('click', (e) => this.handleFooterLink(e, 'contact'));
-};

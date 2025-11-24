@@ -61,7 +61,7 @@ export const Storage = {
                 id: Utils.generateId(),
                 title: 'Spaghetti Carbonara',
                 description: 'A classic Italian pasta dish with eggs, cheese, and pancetta.',
-                image: 'https://images.unsplash.com/photo-1621996346565-e3dbc353d2e5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+                image: 'https://images.unsplash.com/photo-1588013273468-315fd88ea34c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
                 prepTime: 15,
                 cookTime: 20,
                 difficulty: 'medium',
